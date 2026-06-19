@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern CSS Calculator</title>
+    <style>
+        /* Base reset and center layout */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121214;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Calculator Container */
+        .box {
+            width: 360px;
+            background-color: #1e1e24;
+            border-radius: 24px;
+            padding: 24px;
+            gap: 12px;
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(5, 100px);
+            justify-content: center;
+            align-content: center;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* General Key / Button Styling */
+        .sbox {
+            background-color: #2a2a32;
+            color: #ffffff;
+            border: none;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.05s ease;
+            user-select: none;
+        }
+
+        /* Hover & Active interactive states */
+        .sbox:hover {
+            background-color: #3a3a46;
+        }
+
+        .sbox:active {
+            transform: scale(0.95);
+        }
+
+        /* Display Screen Styling */
+        #screen {
+            grid-column: 1 / 5;
+            background-color: #121214;
+            border-radius: 16px;
+            padding: 0 20px 15px 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            font-size: 36px;
+            color: #00ffaa;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        /* Styling for operator keys (+, -, *, /, =) */
+        .sbox:nth-child(5),
+        .sbox:nth-child(9),
+        .sbox:nth-child(13),
+        .sbox:nth-child(16),
+        .sbox:nth-child(17) {
+            background-color: #ff9f0a;
+            color: #ffffff;
+        }
+
+        .sbox:nth-child(5):hover,
+        .sbox:nth-child(9):hover,
+        .sbox:nth-child(13):hover,
+        .sbox:nth-child(16):hover,
+        .sbox:nth-child(17):hover {
+            background-color: #cc7f08;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <div class="sbox" id="screen"></div>
+        <div class="sbox" onclick="cal('7')">7</div>
+        <div class="sbox" onclick="cal('8')">8</div>
+        <div class="sbox" onclick="cal('9')">9</div>
+        <div class="sbox" onclick="cal('/')">/</div>
+        <div class="sbox" onclick="cal('4')">4</div>
+        <div class="sbox" onclick="cal('5')">5</div>
+        <div class="sbox" onclick="cal('6')">6</div>
+        <div class="sbox" onclick="cal('*')">*</div>
+        <div class="sbox" onclick="cal('1')">1</div>
+        <div class="sbox" onclick="cal('2')">2</div>
+        <div class="sbox" onclick="cal('3')">3</div>
+        <div class="sbox" onclick="cal('.')">.</div>
+        <div class="sbox" onclick="cal('0')">0</div>
+        <div class="sbox" onclick="cal('-')">-</div>
+        <div class="sbox" onclick="cal('=')">=</div>
+        <div class="sbox" onclick="cal('+')">+</div>
+    </div>
+
+    <script>
+        let screentxt = ""; 
+        function screenupdate(txt) {
+            screentxt += txt;
+            console.log(screentxt);
+            document.getElementById("screen").innerText = screentxt;
+        }
+
+        function cal(btn) {
+            switch (btn) {
+                case '1': screenupdate('1'); break;
+                case '2': screenupdate('2'); break;
+                case '3': screenupdate('3'); break;
+                case '4': screenupdate('4'); break;
+                case '5': screenupdate('5'); break;
+                case '6': screenupdate('6'); break;
+                case '7': screenupdate('7'); break;
+                case '8': screenupdate('8'); break;
+                case '9': screenupdate('9'); break;
+                case '0': screenupdate('0'); break;
+                case '.': screenupdate('.'); break;
+                case '+': screenupdate('+'); break;
+                case '-': screenupdate('-'); break;
+                case '*': screenupdate('*'); break;
+                case '/': screenupdate('/'); break;
+                case '=': 
+                    let temp = document.getElementById("screen").innerText;
+                    try {
+                        let result = eval(temp);
+                        console.log(result);
+                        document.getElementById("screen").innerText = result;
+                        screentxt = result.toString(); // Update current string state to the calculated result
+                    } catch(err) {
+                        document.getElementById("screen").innerText = "Error";
+                        screentxt = "";
+                    }
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
